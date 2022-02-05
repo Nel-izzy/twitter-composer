@@ -3,6 +3,11 @@ import { ComposerContext } from "../context/Context";
 
 const Modal = () => {
   const { handleChange, handleCreate } = useContext(ComposerContext);
+
+  const clearMessage = () => {
+    document.getElementById("tweettext").value = "";
+    document.getElementById("tweetdate").value = "";
+  };
   return (
     <div>
       <button
@@ -32,6 +37,7 @@ const Modal = () => {
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
+                onClick={clearMessage}
               ></button>
             </div>
             <form onSubmit={handleCreate}>
@@ -55,6 +61,7 @@ const Modal = () => {
                   type="button"
                   className="btn btn-secondary"
                   data-bs-dismiss="modal"
+                  onClick={clearMessage}
                 >
                   Close
                 </button>
@@ -78,7 +85,7 @@ const Modal = () => {
                         <input
                           type="datetime-local"
                           name="date"
-                          id=""
+                          id="tweetdate"
                           onChange={handleChange}
                         />
                       </a>
