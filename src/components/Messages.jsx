@@ -3,7 +3,8 @@ import { ComposerContext } from "../context/Context";
 import Message from "./Message";
 
 const Messages = () => {
-  const { messages } = useContext(ComposerContext);
+  let { messages } = useContext(ComposerContext);
+  messages = messages.sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
   return (
     <div>
       {messages.map((message) => (

@@ -48,7 +48,6 @@ const Context = () => {
   const handleEditClick = (message) => {
     setIsEditing(true);
     setCurrentMessage({ ...message });
-    console.log("clicked");
   };
 
   const handleUpdateMessage = (id, updatedMessage) => {
@@ -61,7 +60,14 @@ const Context = () => {
 
   const handleEditFormSubmit = (e) => {
     e.preventDefault();
-    handleUpdateMessage(currentMessage.id, currentMessage);
+    let diff = new Date().getTime() - Date.parse(currentMessage.date);
+    if (
+      currentMessage.content !== "" &&
+      currentMessage.date !== "" &&
+      diff < 0
+    ) {
+      handleUpdateMessage(currentMessage.id, currentMessage);
+    }
   };
 
   const handleEditInputChange = (e) => {
