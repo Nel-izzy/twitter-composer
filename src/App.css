@@ -7,6 +7,9 @@
   .btn-danger {
     margin-top: 5px;
   }
+  .content {
+    width: 500px;
+  }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */

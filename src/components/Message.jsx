@@ -29,7 +29,7 @@ const Message = (props) => {
         className=" btn btn-close btn-secondary"
       ></button>
       <form onSubmit={handleEditFormSubmit}>
-        <div>
+        <div className="mb-3">
           <label htmlFor="tweetdate" className="form-label">
             Pick Date & Time
           </label>
@@ -78,7 +78,7 @@ const Message = (props) => {
 
   return (
     <div className="row">
-      <div className="col-xs-8 col-sm-5 col-md-5 col-lg-4">
+      <div className="col-xs-8 col-sm-5 col-md-5 col-lg-4 content">
         <p>{truncate(props.content, 60)} </p>
       </div>
       <div className="col-xs-2  col-sm-3 col-md-3 col-lg-2">

@@ -30,7 +30,7 @@ const AddModal = () => {
         </div>
       )}
       <form onSubmit={handleCreate}>
-        <div>
+        <div className="mb-3">
           <label htmlFor="tweetdate" className="form-label">
             Pick Date & Time
           </label>
