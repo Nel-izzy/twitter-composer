@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import Moment from "react-moment";
 import "moment-timezone";
 
@@ -7,8 +7,6 @@ import { ComposerContext } from "../context/Context";
 import ModalComponent from "./ModalComponent";
 
 const Message = (props) => {
-  const [modalVisibleEdit, setModalVisibleEdit] = useState(false);
-
   const {
     deleteMessage,
     handleEditClick,
@@ -16,6 +14,9 @@ const Message = (props) => {
     handleEditInputChange,
     currentMessage,
     setError,
+    modalVisibleEdit,
+    setModalVisibleEdit,
+    error,
   } = useContext(ComposerContext);
 
   const truncate = (str, limit) =>
@@ -24,10 +25,14 @@ const Message = (props) => {
   const modalBodyEdit = (
     <div className="modal-body">
       <h5>Recompose Tweet</h5>
-      <button
-        onClick={closeModalEdit}
-        className=" btn btn-close btn-secondary"
-      ></button>
+      <hr />
+      {error && (
+        <div>
+          <p className="text-danger">{error}</p>
+          <hr />
+        </div>
+      )}
+
       <form onSubmit={handleEditFormSubmit}>
         <div className="mb-3">
           <label htmlFor="tweetdate" className="form-label">
@@ -58,6 +63,9 @@ const Message = (props) => {
         </div>
 
         <div className="modal-footer">
+          <button onClick={closeModalEdit} className=" btn btn-secondary">
+            Close
+          </button>
           <button type="submit" className="btn btn-info tweet-btn">
             Save
           </button>
@@ -79,7 +87,7 @@ const Message = (props) => {
   return (
     <div className="row">
       <div className="col-xs-8 col-sm-5 col-md-5 col-lg-4 content">
-        <p>{truncate(props.content, 60)} </p>
+        <p>{truncate(props.content, 100)} </p>
       </div>
       <div className="col-xs-2  col-sm-3 col-md-3 col-lg-2">
         <time>

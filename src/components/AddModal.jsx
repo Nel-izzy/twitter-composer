@@ -1,26 +1,29 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { ComposerContext } from "../context/Context";
 import ModalComponent from "./ModalComponent";
 
 const AddModal = () => {
-  const { handleChange, handleCreate, error } = useContext(ComposerContext);
-
-  const [modalVisible, setModalVisible] = useState(false);
+  const {
+    handleChange,
+    handleCreate,
+    error,
+    setError,
+    modalVisible,
+    setModalVisible,
+  } = useContext(ComposerContext);
 
   function openModal() {
     setModalVisible(true);
+    setError("");
   }
 
   function closeModal() {
     setModalVisible(false);
+    setError("");
   }
 
   const modalBody = (
     <div className="modal-body">
-      <button
-        onClick={closeModal}
-        className=" btn btn-close btn-secondary mb-3"
-      ></button>
       <h5>Compose Tweet</h5>
       <hr />
       {error && (
@@ -57,6 +60,9 @@ const AddModal = () => {
         </div>
 
         <div className="modal-footer">
+          <button onClick={closeModal} className=" btn btn-secondary ">
+            Close
+          </button>
           <button type="submit" className="btn btn-primary tweet-btn">
             Schedule Tweet
           </button>

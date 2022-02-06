@@ -14,6 +14,8 @@ const Context = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentMessage, setCurrentMessage] = useState({});
   const [error, setError] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisibleEdit, setModalVisibleEdit] = useState(false);
 
   const getRandomNumber = () => Math.floor(Math.random() * 1000);
 
@@ -38,6 +40,7 @@ const Context = () => {
       addMessage({ ...message, id: getRandomNumber() });
 
       setError("");
+      setModalVisible(false);
 
       setMessage({
         ...message,
@@ -72,6 +75,9 @@ const Context = () => {
       diff < 0
     ) {
       handleUpdateMessage(currentMessage.id, currentMessage);
+      setModalVisibleEdit(false);
+    } else {
+      setError("Please pick a future date and write a message");
     }
   };
 
@@ -100,6 +106,10 @@ const Context = () => {
           currentMessage,
           isEditing,
           setError,
+          modalVisible,
+          setModalVisible,
+          modalVisibleEdit,
+          setModalVisibleEdit,
         }}
       >
         <App />
