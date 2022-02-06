@@ -1,153 +1,114 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Moment from "react-moment";
 import "moment-timezone";
-import more from "../images/more.png";
+
 import { ComposerContext } from "../context/Context";
-import Modal from "react-modal";
+
+import ModalComponent from "./ModalComponent";
 
 const Message = (props) => {
+  const [modalVisibleEdit, setModalVisibleEdit] = useState(false);
+
   const {
     deleteMessage,
     handleEditClick,
     handleEditFormSubmit,
     handleEditInputChange,
     currentMessage,
+    setError,
   } = useContext(ComposerContext);
 
-  const customStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      width: "500px",
-      height: "350px",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
-    },
-  };
+  const truncate = (str, limit) =>
+    str.length > limit ? str.slice(0, limit) + "..." : str;
 
-  let subtitle;
-  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const modalBodyEdit = (
+    <div>
+      <h5>Recompose Tweet</h5>
+      <button
+        onClick={closeModalEdit}
+        className=" btn btn-close btn-secondary"
+      ></button>
+      <form onSubmit={handleEditFormSubmit}>
+        <div>
+          <label htmlFor="tweetdate" className="form-label">
+            Pick Date & Time
+          </label>
+          <input
+            type="datetime-local"
+            name="date"
+            id="tweetdate"
+            className="form-control"
+            value={currentMessage.date}
+            onChange={handleEditInputChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="tweettext" className="form-label">
+            Twitter Name @twitterusername
+          </label>
+          <textarea
+            className="form-control"
+            name="content"
+            id="tweettext"
+            placeholder="Begin your Tweet to  Schedule"
+            rows="4"
+            value={currentMessage.content}
+            onChange={handleEditInputChange}
+          ></textarea>
+        </div>
 
-  function openModal() {
-    setIsOpen(true);
+        <div className="modal-footer">
+          <button type="submit" className="btn btn-info tweet-btn">
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+
+  function openModalEdit() {
+    setModalVisibleEdit(true);
     handleEditClick(props);
   }
 
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    if (subtitle) subtitle.style.color = "#f00";
-  }
-
-  function closeModal() {
-    setIsOpen(false);
+  function closeModalEdit() {
+    setModalVisibleEdit(false);
+    setError("");
   }
 
   return (
     <div className="row">
-      <div className="col-md-5">
-        <p>{props.content} </p>
+      <div className="col-xs-12 col-sm-5 col-md-5 col-lg-4">
+        <p>{truncate(props.content, 60)} </p>
       </div>
-      <div className="col-md-2">
+      <div className="col-xs-6  col-sm-3 col-md-3 col-lg-2">
         <time>
-          <Moment format="D MMM YYYY hh:mm">{props.date}</Moment>
+          <Moment format="D MMM YYYY HH:mm">{props.date}</Moment>
         </time>
       </div>
 
-      <div className="col-md-2">
-        <span className="dropdown">
-          <img
-            src={more}
-            className="dropdown-toggle more"
-            id="dropdownMenuButton2"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
+      <div className="col-xs-6  col-sm-2 col-md-2 col-lg-2">
+        <button onClick={openModalEdit} className="btn btn-warning tweet-btn">
+          Edit{" "}
+        </button>
+        {modalVisibleEdit && (
+          <ModalComponent
+            visible={modalVisibleEdit}
+            handleClose={closeModalEdit}
+            body={modalBodyEdit}
           />
-
-          <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-            <li className="extra">
-              <button onClick={openModal}>Open Modal</button>
-              <Modal
-                isOpen={modalIsOpen}
-                onAfterOpen={afterOpenModal}
-                onRequestClose={closeModal}
-                style={customStyles}
-                contentLabel="Example Modal"
-              >
-                <button
-                  onClick={closeModal}
-                  className=" btn btn-close btn-secondary"
-                ></button>
-
-                <form onSubmit={handleEditFormSubmit}>
-                  <div className="modal-body">
-                    <div>
-                      <label htmlFor="tweettext" className="form-label">
-                        Twitter Name @twitterhandle
-                      </label>
-                      <textarea
-                        className="form-control"
-                        name="content"
-                        id="tweettext"
-                        placeholder="Begin your Tweet to  Schedule"
-                        rows="4"
-                        value={currentMessage.content}
-                        onChange={handleEditInputChange}
-                      ></textarea>
-                    </div>
-                  </div>
-                  <div className="modal-footer">
-                    <button type="submit" className="btn btn-success tweet-btn">
-                      Update
-                    </button>
-                    <span className="dropdown">
-                      <button
-                        className="btn btn-success dropdown-toggle create-toggle"
-                        type="button"
-                        id="dropdownMenuButton1"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                      ></button>
-                      <ul
-                        className="dropdown-menu"
-                        aria-labelledby="dropdownMenuButton1"
-                      >
-                        <li>
-                          <a className="dropdown-item" href="#">
-                            <input
-                              type="datetime-local"
-                              name="date"
-                              value={currentMessage.date}
-                              onChange={handleEditInputChange}
-                            />
-                          </a>
-                        </li>
-                        <li>
-                          <a className="dropdown-item" href="#">
-                            Save draft
-                          </a>
-                        </li>
-                      </ul>
-                    </span>
-                  </div>
-                </form>
-              </Modal>
-            </li>
-
-            <li className="extra">
-              <button
-                className="btn btn-white"
-                onClick={() => deleteMessage(props.id)}
-              >
-                Delete
-              </button>
-            </li>
-          </ul>
-        </span>
+        )}
+      </div>
+      <div className="col-xs-6 col-sm-2 col-md-2 col-lg-2">
+        <button
+          onClick={() => deleteMessage(props.id)}
+          className="btn btn-danger tweet-btn"
+        >
+          Delete
+        </button>
       </div>
 
-      <div className="col-md-3"></div>
+      <hr />
     </div>
   );
 };

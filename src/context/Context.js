@@ -13,6 +13,7 @@ const Context = () => {
   const [messages, setMessages] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [currentMessage, setCurrentMessage] = useState({});
+  const [error, setError] = useState("");
 
   const getRandomNumber = () => Math.floor(Math.random() * 1000);
 
@@ -36,12 +37,16 @@ const Context = () => {
     if (content !== "" && date !== "" && diff < 0) {
       addMessage({ ...message, id: getRandomNumber() });
 
+      setError("");
+
       setMessage({
         ...message,
 
         content: "",
         date: "",
       });
+    } else {
+      setError("Please pick a future date and write a message");
     }
   };
 
@@ -82,6 +87,7 @@ const Context = () => {
       <ComposerContext.Provider
         value={{
           message,
+          error,
           setMessage,
           handleChange,
           messages,
@@ -93,6 +99,7 @@ const Context = () => {
           handleEditInputChange,
           currentMessage,
           isEditing,
+          setError,
         }}
       >
         <App />
