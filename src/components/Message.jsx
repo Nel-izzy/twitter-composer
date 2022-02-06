@@ -22,7 +22,7 @@ const Message = (props) => {
     str.length > limit ? str.slice(0, limit) + "..." : str;
 
   const modalBodyEdit = (
-    <div>
+    <div className="modal-body">
       <h5>Recompose Tweet</h5>
       <button
         onClick={closeModalEdit}

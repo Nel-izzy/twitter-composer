@@ -8,7 +8,6 @@ const ModalComponent = ({ visible, handleClose, body }) => {
       left: "50%",
       right: "auto",
       bottom: "auto",
-      width: "500px",
       height: "350px",
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",

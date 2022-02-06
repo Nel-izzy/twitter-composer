@@ -1,7 +1,6 @@
 import React from "react";
 import Messages from "./components/Messages";
 import Modal from "./components/AddModal";
-
 import "./App.css";
 
 const App = () => {

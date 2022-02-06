@@ -16,7 +16,7 @@ const AddModal = () => {
   }
 
   const modalBody = (
-    <div>
+    <div className="modal-body">
       <button
         onClick={closeModal}
         className=" btn btn-close btn-secondary mb-3"
