@@ -78,19 +78,20 @@ const Message = (props) => {
 
   return (
     <div className="row">
-      <div className="col-xs-12 col-sm-5 col-md-5 col-lg-4">
+      <div className="col-xs-8 col-sm-5 col-md-5 col-lg-4">
         <p>{truncate(props.content, 60)} </p>
       </div>
-      <div className="col-xs-6  col-sm-3 col-md-3 col-lg-2">
+      <div className="col-xs-2  col-sm-3 col-md-3 col-lg-2">
         <time>
           <Moment format="D MMM YYYY HH:mm">{props.date}</Moment>
         </time>
       </div>
 
-      <div className="col-xs-6  col-sm-2 col-md-2 col-lg-2">
-        <button onClick={openModalEdit} className="btn btn-warning tweet-btn">
-          Edit{" "}
+      <div className="col-xs-2  col-sm-2 col-md-2 col-lg-2">
+        <button onClick={openModalEdit} className="btn btn-warning  tweet-btn">
+          Edit
         </button>
+
         {modalVisibleEdit && (
           <ModalComponent
             visible={modalVisibleEdit}
@@ -99,16 +100,16 @@ const Message = (props) => {
           />
         )}
       </div>
-      <div className="col-xs-6 col-sm-2 col-md-2 col-lg-2">
+      <div className="col-xs-2 col-sm-2 col-md-2 col-lg-2">
         <button
           onClick={() => deleteMessage(props.id)}
-          className="btn btn-danger tweet-btn"
+          className="btn btn-danger  tweet-btn"
         >
           Delete
         </button>
       </div>
 
-      <hr />
+      <hr className="mt-2" />
     </div>
   );
 };
