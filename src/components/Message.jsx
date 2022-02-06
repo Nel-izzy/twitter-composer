@@ -77,6 +77,7 @@ const Message = (props) => {
   function openModalEdit() {
     setModalVisibleEdit(true);
     handleEditClick(props);
+    setError("");
   }
 
   function closeModalEdit() {
